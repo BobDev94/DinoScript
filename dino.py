@@ -5,15 +5,17 @@ import numpy as np
 def pixsum(pt):
 
     box=tuple(pt)
-    box1=(box[0]+30,box[1],box[0]+80,box[1]+2)
-    box2=(box[0]+80,box[1],box[0]+130,box[1]+2)
-    box3=(box[0]+80,box[1]-12,box[0]+130,box[1]-10)
+    box_whole=(box[0]+5,box[1]-12,box[0]+120,box[1]+2)
+    box1=(0,0,50,14)
+    box2=(50,0,100,14)
 
-    img1,img2,img3 = ImageGrab.grab(box1),ImageGrab.grab(box2),ImageGrab.grab(box3)
+    img = ImageGrab.grab(box_whole)
+    img1=img.crop((box1))
+    img2=img.crop((box2))
 
-    gs1,gs2,gs3 = ImageOps.grayscale(img1), ImageOps.grayscale(img2), ImageOps.grayscale(img3)
+    gs1,gs2 = ImageOps.grayscale(img1), ImageOps.grayscale(img2)
 
-    if (np.array(gs1.getcolors())).sum()!=(np.array(gs2.getcolors())).sum() or (np.array(gs1.getcolors())).sum()!=(np.array(gs3.getcolors())).sum():
+    if (np.array(gs1.getcolors())).sum() != (np.array(gs2.getcolors())).sum():
         return False
 
     return True
@@ -34,6 +36,7 @@ def main():
     count=0
 
     #MAIN LOOP
+    tot=0
     while 1:
         if not pixsum(pt):
             pygui.press(' ')
@@ -41,9 +44,13 @@ def main():
             pygui.press('Down')
             count+=1
             print(count)
-            if count>100:
+            if count>8: #At 10, 1k+ score
+                if tot>20:
+                    continue
                 count=0
-                pt[0]+=1
+                pt[0]+=2
+                tot+=2
+                print(pt)
 
 if __name__=='__main__':
     main()
