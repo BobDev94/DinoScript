@@ -43,14 +43,12 @@ def main():
             time.sleep(0.15)
             pygui.press('Down')
             count+=1
-            print(count)
-            if count>8: #At 10, 1k+ score
+            if count>8:
                 if tot>20:
                     continue
                 count=0
                 pt[0]+=2
                 tot+=2
-                print(pt)
 
 if __name__=='__main__':
     main()
