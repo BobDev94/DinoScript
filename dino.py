@@ -41,14 +41,16 @@ def main():
     delay=0.00 #Decrease the amount of time dino spends in the air at high spseeds
     while 1:
         if not pixsum(pt):
+            if tot<10: #Without this,  at sub 300 scores, the dino might not clear large cactus bush
+                time.sleep(0.1)
             pygui.press(' ')
             time.sleep(0.15-delay)
             pygui.press('Down')
             count+=1
             if count>5:
-                if tot in [10,14,18,22,26,30,34,40]:
+                if tot in [10,14,18,22,26,30,34,38,42,46,50]:
                     delay+=0.01
-                if tot>40:
+                if tot>50:
                     continue
                 count=0
                 pt[0]+=2 #Increasing x coords of dino origin for jumping at high speeds
