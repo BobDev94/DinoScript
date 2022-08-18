@@ -5,7 +5,7 @@ import numpy as np
 def pixsum(pt):
 
     box=tuple(pt)
-    box_whole=(box[0]+5,box[1]-12,box[0]+120,box[1]+2)
+    box_whole=(box[0]+5,box[1]-12,box[0]+105,box[1]+2)
     box1=(0,0,50,14)
     box2=(50,0,100,14)
 
@@ -43,8 +43,8 @@ def main():
             time.sleep(0.15)
             pygui.press('Down')
             count+=1
-            if count>8:
-                if tot>20:
+            if count>5:
+                if tot>30:
                     continue
                 count=0
                 pt[0]+=2
