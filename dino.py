@@ -10,6 +10,7 @@ def pixsum(pt):
     box2=(50,0,100,14)
 
     img = ImageGrab.grab(box_whole)
+    #Box is cut into 2 equal halves for comparison
     img1=img.crop((box1))
     img2=img.crop((box2))
 
@@ -21,7 +22,7 @@ def pixsum(pt):
     return True
 
 def main():
-    coord=input('Enter new coordinates for dinosour origin point? enter "y" if yes, else just hit enter: ')
+    coord=input('Enter new coordinates for dinosour origin point. Ideally, a point below its nose, so the image which is grabbed covers both bushes and birds. enter "y" if yes, else just hit enter: ')
     if coord.lower()=='y':
         pt=[int(i) for i in input('Enter new coordinates separated by a comma: ').split(',')]
         print(f'Got it, new dino coords are: {pt}')
@@ -36,18 +37,21 @@ def main():
     count=0
 
     #MAIN LOOP
-    tot=0
+    tot=0 #counter to track progress and modify origin point
+    delay=0.00 #Decrease the amount of time dino spends in the air at high spseeds
     while 1:
         if not pixsum(pt):
             pygui.press(' ')
-            time.sleep(0.15)
+            time.sleep(0.15-delay)
             pygui.press('Down')
             count+=1
             if count>5:
-                if tot>30:
+                if tot in [10,14,18,22,26,30,34,40]:
+                    delay+=0.01
+                if tot>40:
                     continue
                 count=0
-                pt[0]+=2
+                pt[0]+=2 #Increasing x coords of dino origin for jumping at high speeds
                 tot+=2
 
 if __name__=='__main__':
